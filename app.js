@@ -1,8 +1,14 @@
+
+
+
 // Clicking on Enter button
 // New images displayed of hidden cards = creating board
 // then game startes - shuffling board
-    //define functions 
+    //define functions
     // fit screen in css or late
+    let lightScore = 0
+
+    let darkScore = 0
 
     let shuffledCardArray = []
 
@@ -27,13 +33,13 @@
         {name: "Barriss Offee", id:"BarrissOffee2", darkside: true, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_6AfhevbacAZ9exIjIuZvyseziI6NE6T9eg&usqp=CAU", },
         {name: "Ashoka Tano", id:"AshokaTano1", lightSide: true, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmkuqrN4Dz80Qs5bbL4M5999OUNtXLIQRMA&usqp=CAU", },
         {name: "Ashoka Tano", id:"AshokaTano2", lightSide: true, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmkuqrN4Dz80Qs5bbL4M5999OUNtXLIQRMA&usqp=CAU", },
-       
+
     ];
 
 
     const boardContainer = document.getElementById("Board-container")
 
-    
+
     //event listener for play button
 const playButton = document.querySelector("#PLAY")
 playButton.addEventListener('click', createBoard)
@@ -56,8 +62,8 @@ function createBoard() {
         img2.src = cardArray[x].img
         img2.style.width="100px"
         img2.style.height="100px"
-        
-	let card = document.createElement("div");
+
+	    let card = document.createElement("div");
         // card.setAttribute("id", cardArray[x].id);
 				card.setAttribute("data-name", cardArray[x].name);
 				card.setAttribute("class", "each-card");
@@ -65,7 +71,7 @@ function createBoard() {
         card.append(img2)
         card.addEventListener('click', flipCard)
         boardContainer.append(card);
-		
+
 	}
 }
 
@@ -84,7 +90,7 @@ function createBoard() {
         }
                    }
 
-                               
+
 function flipCard () {
     console.log(this);
     if (this === firstCard) return;
@@ -93,7 +99,7 @@ function flipCard () {
 
     if (!firstCard) {
         firstCard = this;
-        return; 
+        return;
     }
     secondCard = this;
     console.log(firstCard,secondCard);
@@ -105,6 +111,8 @@ function flipCard () {
     } else {
         unflipCards ();
     }
+    
+    checkWon()
 }
 
 function disableCards() {
@@ -124,7 +132,7 @@ function unflipCards() {
 function resetBoard() {
     firstCard = null;
     secondCard = null;
-    lockBoard = false; 
+    lockBoard = false;
 }
 
 function restart() {
@@ -139,10 +147,18 @@ function restart() {
 
 
 function checkWon() {
-if (cardsWon == cardArray.length / 2) {
-alert("You won") 
-setTimeout(()=> popup.style.display = "flex" ,300); 
-}
+    if(weight===0){
+        if (lightScore > darkScore){
+            alert("You are a Jedi!")
+        } else {
+            alert("You are a Sith!")
+        }
+    }
+
+    // if (cardsWon == cardArray.length / 2) {
+// alert("You won")
+// setTimeout(()=> popup.style.display = "flex" ,300);
+// }
 }
 
 let firstCard, secondCard;
@@ -150,56 +166,16 @@ let weight = 10;
 
 function addWeightedValue(card) {
     if (card.lightSide) {
-        lightScore += 1 * weight;
+        lightScore += (1 * weight);
     } else {
-        darkScore += 1* weight;
+        darkScore += (1* weight);
     }
     weight--;
 }
 
 
-// // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNKnm5e6G5H021X9UBvvaDR5-wWIbyAJ6m5A&usqp=CAU
+//to check if won, you can give each of the cards a flipped boolean value
 
+//maybe can set an async condition
 
-// let grid = document.querySelector(".grid"); 
-// let scoreBoard = document.querySelector(".scoreBoard"); 
-// let popup = document.querySelector(".popup"); 
-// let playAgain = document.querySelector(".playAgain"); 
-// let clickBoard = document.querySelector(".clickBoard"); 
-// let imgs; 
-// let cardsId = []; 
-// let cardsSelected = []; 
-// let cardsWon = 0; 
-// let clicks = 0;
-//     //add a click function for images 
-    
-//     imgs = document.querySelectorAll("img");
-//     Array.from(imgs).forEach(img => 
-//     img.addEventListener("click", flipCard)
-//     ) 
-    
-//     document.addEventListener("DOMContentLoaded", function () {
-//     })
-
-    
-// const buttonsContainer = document.querySelector(".buttons-container");
-// let cards = []
-
-// let lockBoard = false; 
-// let score = 0;
-
-// document.querySelector(".score").textContent = score; 
-
-// fetch("./data/cards.json")
-// .then((res) => res.json())
-// .then((data) => {
-//     cards = [...data,...data];
-//     shuffleCards();
-//     generateCards();
-// });
-
-   // player.innerHTML = ''
-
-     
-        //remove event listener from play button once cards are added to the card holder
-     
+//you can call checkWon after every movie to result in result; checkWon needs to be different than what have; may need to be async
